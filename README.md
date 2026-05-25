@@ -1,51 +1,55 @@
 # Automação de API - Serverest
 
-Projeto de automação de testes de API utilizando:
+Projeto de automação de testes de API utilizando Postman e Newman para validação de endpoints REST da API Serverest.
+
+---
+
+## Tecnologias utilizadas
 
 - Postman
 - Newman
 - JavaScript
-- Testes automatizados REST
-
-## Fluxos automatizados
-
-- Login
-- Criar Produto
-- Buscar Produto
-- Atualizar Produto
-- Deletar Produto
-
-## Tecnologias
-
-- Postman
-- Newman
 - Node.js
+- Git
+- GitHub
 
-## Execução dos testes
+---
+
+## Funcionalidades automatizadas
+
+### Login
+- Realizar login com sucesso
+- Validar retorno do token
+
+### Produtos
+- Criar produto
+- Buscar produto
+- Atualizar produto
+- Deletar produto
+
+### Usuários
+- Criar usuário
+
+---
+
+## Validações realizadas
+
+- Status code
+- Mensagens de sucesso
+- Validação de ID
+- Validação de campos da resposta
+- Fluxo CRUD completo
+
+---
+
+## Como executar o projeto
+
+### Pré-requisitos
+
+- Node.js instalado
+- Newman instalado globalmente
+
+### Instalar Newman
 
 ```bash
-newman run Serverest.postman_collection.json -e Serverest.postman_environment.json
-```
-
-## Objetivo
-
-Demonstrar conhecimentos em:
-- automação de API
-- variáveis dinâmicas
-- assertions
-- fluxo CRUD
-- execução automatizada via CLI
-
-## Evidências da execução
-
-### Execução dos testes via Newman
-
-![Execução Newman](evidencias/newman-run.png)
-
-### Collection no Postman
-
-![Postman](evidencias/postman-collection.png)
-
-### Projeto publicado no GitHub
-
-![GitHub](evidencias/github-project.png)
+npm install -g newman
