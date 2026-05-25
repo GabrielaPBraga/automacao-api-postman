@@ -35,3 +35,17 @@ Demonstrar conhecimentos em:
 - assertions
 - fluxo CRUD
 - execução automatizada via CLI
+
+## Evidências da execução
+
+### Execução dos testes via Newman
+
+![Execução Newman](evidencias/newman-run.png)
+
+### Collection no Postman
+
+![Postman](evidencias/postman-collection.png)
+
+### Projeto publicado no GitHub
+
+![GitHub](evidencias/github-project.png)
