@@ -1,5 +1,11 @@
 # Automação de API - Serverest
 
+![Postman](https://img.shields.io/badge/Postman-API_Testing-orange)
+![Newman](https://img.shields.io/badge/Newman-Test_Automation-green)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow)
+![GitHub](https://img.shields.io/badge/GitHub-Version_Control-black)
+![Status](https://img.shields.io/badge/Status-Concluído-success)
+
 Projeto de automação de testes de API utilizando Postman e Newman para validação de endpoints REST da API Serverest.
 
 ---
