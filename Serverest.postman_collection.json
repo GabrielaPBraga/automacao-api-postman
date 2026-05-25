@@ -1,0 +1,357 @@
+{
+  "info": {
+    "_postman_id": "c11817bf-606a-4470-a0a9-24a3c54e7b2c",
+    "name": "Serverest",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "55198457",
+    "_collection_link": "https://go.postman.co/collection/55198457-c11817bf-606a-4470-a0a9-24a3c54e7b2c?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Login",
+      "item": [
+        {
+          "name": "login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.environment.set(\r",
+                  "    \"TOKEN\",\r",
+                  "    response.authorization\r",
+                  ");\r",
+                  "\r",
+                  "console.log(response.authorization);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"fulano@qa.com\",\r\n  \"password\": \"teste\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/login",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Produtos",
+      "item": [
+        {
+          "name": "Criar Produto",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const nomeProduto = \"Produto QA \" + Date.now();\r",
+                  "\r",
+                  "pm.environment.set(\r",
+                  "    \"NOME_PRODUTO\",\r",
+                  "    nomeProduto\r",
+                  ");"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code deve ser 201\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Mensagem de sucesso correta\", function () {\r",
+                  "\r",
+                  "    const response = pm.response.json();\r",
+                  "\r",
+                  "    pm.expect(response.message)\r",
+                  "      .to.eql(\"Cadastro realizado com sucesso\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"ID do produto deve existir\", function () {\r",
+                  "\r",
+                  "    const response = pm.response.json();\r",
+                  "\r",
+                  "    pm.expect(response._id)\r",
+                  "      .to.not.be.empty;\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.environment.set(\r",
+                  "    \"PRODUTO_ID\",\r",
+                  "    response._id\r",
+                  ");"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nome\": \"{{NOME_PRODUTO}}\",\r\n  \"preco\": 100,\r\n  \"descricao\": \"Produto criado via Postman\",\r\n  \"quantidade\": 10\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/produtos",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "produtos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar Produto",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code deve ser 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Produto possui ID\", function () {\r",
+                  "\r",
+                  "    const response = pm.response.json();\r",
+                  "\r",
+                  "    pm.expect(response._id)\r",
+                  "      .to.not.be.empty;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Produto possui nome\", function () {\r",
+                  "\r",
+                  "    const response = pm.response.json();\r",
+                  "\r",
+                  "    pm.expect(response.nome)\r",
+                  "      .to.not.be.empty;\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/produtos/{{PRODUTO_ID}}",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "produtos",
+                "{{PRODUTO_ID}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Atualizar Produto",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code deve ser 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Mensagem de alteração correta\", function () {\r",
+                  "\r",
+                  "    const response = pm.response.json();\r",
+                  "\r",
+                  "    pm.expect(response.message)\r",
+                  "      .to.eql(\"Registro alterado com sucesso\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{TOKEN}}",
+                "type": "text"
+              },
+              {
+                "key": "",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nome\": \"{{NOME_PRODUTO}} EDITADO\",\r\n  \"preco\": 150,\r\n  \"descricao\": \"Produto atualizado via Postman\",\r\n  \"quantidade\": 20\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/produtos/{{PRODUTO_ID}}",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "produtos",
+                "{{PRODUTO_ID}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Deletar Produto",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/produtos/{{PRODUTO_ID}}",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "produtos",
+                "{{PRODUTO_ID}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Usuarios",
+      "item": [
+        {
+          "name": "Criar Usuario",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nome\": \"Fulano do Teste\",\r\n  \"email\": \"beltrano@qa.com.br\",\r\n  \"password\": \"teste\",\r\n  \"administrador\": \"true\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/usuarios",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "usuarios"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "BASE_URL",
+      "value": ""
+    }
+  ]
+}
